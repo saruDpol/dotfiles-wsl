@@ -44,7 +44,29 @@ alias biosfer="cd ~/../../mnt/c/Users/ptorn/POL/Biosfer/"
 # Eza aliases
 alias ls='eza --group-directories-first --icons --color=always'
 alias ll='eza -la --git --time-style=long-iso --group-directories-first --icons --color=always --git'
-alias lt='eza -T --icons --color=always --group-directories-first'
+unalias lt 2>/dev/null
+lt() {
+  local depth=2
+  local dir="."
+
+  # If first argument is a number, use it as depth
+  if [[ "${1:-}" =~ ^[0-9]+$ ]]; then
+    depth="$1"
+    shift
+  fi
+
+  # If another argument exists, treat it as directory
+  if [[ "${1:-}" != "" ]]; then
+    dir="$1"
+  fi
+
+  eza -T -L "$depth" "$dir" --icons --color=always --group-directories-first
+}
+
+unalias open 2>/dev/null
+open() {
+  explorer.exe "$@"
+}
 
 # ───────────────────────────────
 # Git helper
@@ -86,3 +108,43 @@ export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
 
 export PATH="$HOME/.cargo/bin:$PATH"
+
+# TMUX IDE
+ide() {
+  local total=${1:-4}
+
+  # Must be inside tmux
+  if [ -z "$TMUX" ]; then
+    echo "Run this inside tmux"
+    return 1
+  fi
+
+  # Compute rows and columns (near-square)
+  local rows=$(python3 - <<EOF
+import math
+n=$total
+r=int(math.sqrt(n))
+while n % r != 0:
+    r-=1
+print(r)
+EOF
+)
+  local cols=$(( total / rows ))
+
+  # First split into columns
+  for ((i=1; i<cols; i++)); do
+    tmux split-window -h
+    tmux select-layout even-horizontal
+  done
+
+  # Then split each column into rows
+  for ((c=0; c<cols; c++)); do
+    tmux select-pane -t $c
+    for ((r=1; r<rows; r++)); do
+      tmux split-window -v
+      tmux select-layout even-vertical
+    done
+  done
+
+  tmux select-layout tiled
+}
