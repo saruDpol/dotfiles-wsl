@@ -79,6 +79,10 @@ end, { desc = "Open Alpha Dashboard" })
 -- =========================================================
 -- 📋 CLIPBOARD & EDITING
 -- =========================================================
+-- mantenir seleccio visual despres d'indentar
+--
+vim.keymap.set("v", ">", ">gv")
+vim.keymap.set("v", "<", "<gv")
 
 -- Yank to system clipboard
 keymap.set({ "n", "v" }, "<leader>y", '"+y', opts)
