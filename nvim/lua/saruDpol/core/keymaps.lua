@@ -39,7 +39,8 @@ keymap.set("n", "<C-m>", "<C-i>", opts) -- newer position
 
 -- Keep cursor centered when scrolling
 keymap.set("n", "<C-d>", "<C-d>zz", { desc = "Half-page down and center" })
-keymap.set("n", "<C-b>", "<C-b>zz", { desc = "Page up and center" })
+-- keymap.set("n", "<C-b>", "<C-b>zz", { desc = "Page up and center" })
+keymap.set("n", "<C-b>", "<C-b>", { desc = "Page up" })
 
 -- Scroll padding
 vim.o.scrolloff = 8
