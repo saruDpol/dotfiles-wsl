@@ -1,4 +1,5 @@
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
+local tssite = vim.fn.stdpath("data") .. "/site"
 if not vim.loop.fs_stat(lazypath) then
 	vim.fn.system({
 		"git",
@@ -9,6 +10,7 @@ if not vim.loop.fs_stat(lazypath) then
 		lazypath,
 	})
 end
+vim.opt.rtp:prepend(tssite)
 vim.opt.rtp:prepend(lazypath)
 
 require("lazy").setup({ { import = "saruDpol.plugins" }, { import = "saruDpol.plugins.lsp" } }, {

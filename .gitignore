@@ -1,3 +1,25 @@
-gh/
-matplotlib/
+.codex
+.DS_Store
+.idea/
+.vscode/
+*.log
+*.swp
+*.swo
+*~
 
+__pycache__/
+.mypy_cache/
+.pytest_cache/
+.ruff_cache/
+.venv/
+
+nvim/.codex
+nvim/.nvimlog
+
+gh/hosts.yml
+gh/
+git/
+tmux/plugins/
+
+matplotlib/
+codex/
