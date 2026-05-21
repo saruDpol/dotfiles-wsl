@@ -1,4 +1,6 @@
 local wezterm = require("wezterm")
+local config_dir = os.getenv("XDG_CONFIG_HOME") or (wezterm.home_dir .. "/.config")
+local mode_file = config_dir .. "/theme-mode"
 
 local solarized_osaka = {
 	foreground = "#d0d0d0",
@@ -9,6 +11,29 @@ local solarized_osaka = {
 	selection_bg = "#2d4f67",
 	selection_fg = "#d0d0d0",
 }
+
+local solarized_light = {
+	foreground = "#586e75",
+	background = "#fdf6e3",
+	selection_bg = "#eee8d5",
+	selection_fg = "#586e75",
+}
+
+local function get_mode()
+	local f = io.open(mode_file, "r")
+	if not f then
+		return "dark"
+	end
+	local value = f:read("*l")
+	f:close()
+	if value == "light" then
+		return "light"
+	end
+	return "dark"
+end
+
+local mode = get_mode()
+local selected_scheme = (mode == "light") and "Solarized Light Custom" or "Solarized Osaka"
 
 return {
 	-- Defaulting to wsl home directory
@@ -21,8 +46,9 @@ return {
 	--	colorscheme
 	color_schemes = {
 		["Solarized Osaka"] = solarized_osaka,
+		["Solarized Light Custom"] = solarized_light,
 	},
-	color_scheme = "Solarized Osaka",
+	color_scheme = selected_scheme,
 	window_background_opacity = 0.65,
 
 	--Performance tweaks

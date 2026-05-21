@@ -7,6 +7,10 @@ return {
 		-- Use Ruff for Python
 		lint.linters_by_ft = {
 			python = { "ruff" },
+			javascript = { "eslint_d" },
+			javascriptreact = { "eslint_d" },
+			typescript = { "eslint_d" },
+			typescriptreact = { "eslint_d" },
 		}
 
 		-- Create autocmd group for linting
@@ -22,19 +26,20 @@ return {
 
 		-- Function to trigger linting with venv activated
 		local function try_linting()
-			if vim.bo.filetype ~= "python" then
+			local ft = vim.bo.filetype
+			if ft == "python" then
+				-- Only run Python linting if a venv is selected
+				if not vim.g.current_venv then
+					return
+				end
+				vim.fn["venv-selector#activate"](vim.g.current_venv)
+			end
+
+			local linters = lint.linters_by_ft[ft]
+			if not linters then
 				return
 			end
 
-			-- Only run if a venv is selected
-			if not vim.g.current_venv then
-				return
-			end
-
-			-- Activate the current venv
-			vim.fn["venv-selector#activate"](vim.g.current_venv)
-
-			local linters = lint.linters_by_ft[vim.bo.filetype]
 			local diagnostics = lint.try_lint(linters)
 
 			if diagnostics then

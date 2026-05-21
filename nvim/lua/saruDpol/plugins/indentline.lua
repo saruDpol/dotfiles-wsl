@@ -19,13 +19,24 @@ return {
 		hooks.register(hooks.type.SCOPE_HIGHLIGHT, function(_, bufnr, scope, scope_index)
 			local lang = vim.treesitter.language.get_lang(vim.bo[bufnr].filetype) or vim.bo[bufnr].filetype
 
-			if lang ~= "python" then
-				return scope_index
+			if lang == "python" then
+				local start_row, start_col = scope:start()
+				local highlight_count = 8
+				return (start_row * 3 + start_col) % highlight_count + 1
 			end
 
-			local start_row, start_col = scope:start()
-			local highlight_count = 8
-			return (start_row * 3 + start_col) % highlight_count + 1
+			if
+				lang == "lua"
+				or lang == "javascript"
+				or lang == "typescript"
+				or lang == "tsx"
+				or lang == "javascriptreact"
+				or lang == "typescriptreact"
+			then
+				return ((scope_index - 1) % 8) + 1
+			end
+
+			return scope_index
 		end)
 
 		require("ibl").setup({
@@ -35,14 +46,14 @@ return {
 			scope = {
 				enabled = true,
 				highlight = {
-					"ScopeGreen", -- 1
-					"ScopePurple", -- 2
-					"ScopeRed", -- 3
-					"ScopeGold", -- 4
-					"ScopeBlue", -- 5
-					"ScopeCyan", -- 6
-					"ScopeOrange", -- 7
-					"ScopePink", -- 8
+					"ScopeGreen",
+					"ScopePurple",
+					"ScopeRed",
+					"ScopeGold",
+					"ScopeBlue",
+					"ScopeCyan",
+					"ScopeOrange",
+					"ScopePink",
 				},
 				show_start = false,
 				show_end = false,

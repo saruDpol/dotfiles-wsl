@@ -5,6 +5,16 @@ export TERM="xterm-256color"
 # ───────────────────────────────
 export PATH="$HOME/.local/bin:$PATH"
 
+if [[ -d "/mnt/c/Users/ptorn/.config" ]]; then
+  THEME_MODE_FILE="/mnt/c/Users/ptorn/.config/theme-mode"
+else
+  THEME_MODE_FILE="${XDG_CONFIG_HOME:-$HOME/.config}/theme-mode"
+fi
+export THEME_MODE_FILE
+[[ -f "$THEME_MODE_FILE" ]] || {
+  mkdir -p "${THEME_MODE_FILE:h}"
+  printf "dark\n" >| "$THEME_MODE_FILE"
+}
 
 if [[ -n $TMUX ]]; then
   export TERM="xterm-256color"
@@ -108,6 +118,53 @@ export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
 
 export PATH="$HOME/.cargo/bin:$PATH"
+
+# Theme mode helpers (dark/light)
+set_theme_mode() {
+  local mode="$1"
+  if [[ "$mode" != "dark" && "$mode" != "light" ]]; then
+    echo "Usage: set_theme_mode [dark|light]"
+    return 1
+  fi
+
+  printf "%s\n" "$mode" >| "$THEME_MODE_FILE"
+
+  local tmux_theme_dir="${XDG_CONFIG_HOME:-$HOME/.config}/tmux"
+  local source_file="$tmux_theme_dir/theme-${mode}.conf"
+  local target_file="$tmux_theme_dir/theme-current.conf"
+
+  if [[ -f "$source_file" ]]; then
+    cp "$source_file" "$target_file"
+    if command -v tmux >/dev/null 2>&1; then
+      tmux source-file "$target_file" 2>/dev/null
+      tmux refresh-client -S 2>/dev/null
+
+      # Refresh running Neovim instances inside tmux panes
+      local pane
+      while IFS= read -r pane; do
+        tmux send-keys -t "$pane" Escape ":lua require('saruDpol.theme_mode').apply(true)" Enter
+      done < <(tmux list-panes -a -F '#{pane_id} #{pane_current_command}' 2>/dev/null | awk '$2 ~ /^n?vim$/ {print $1}')
+    fi
+  fi
+
+  # Try to reload WezTerm config (WSL + Windows)
+  if command -v wezterm >/dev/null 2>&1; then
+    wezterm cli reload >/dev/null 2>&1
+  fi
+  if command -v powershell.exe >/dev/null 2>&1; then
+    powershell.exe -NoProfile -Command "wezterm cli reload" >/dev/null 2>&1
+  fi
+
+  echo "Theme mode set to: $mode"
+}
+
+dark() {
+  set_theme_mode dark
+}
+
+light() {
+  set_theme_mode light
+}
 
 # TMUX IDE
 ide() {

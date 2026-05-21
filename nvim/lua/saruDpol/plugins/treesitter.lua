@@ -32,6 +32,8 @@ return {
 			})
 
 			vim.treesitter.language.register("bash", "zsh")
+			vim.treesitter.language.register("tsx", "typescriptreact")
+			vim.treesitter.language.register("javascript", "javascriptreact")
 
 			local installed = {}
 			for _, lang in ipairs(ts.get_installed("parsers")) do

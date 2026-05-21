@@ -77,6 +77,9 @@ keymap.set("n", "<leader>aa", function()
 	require("alpha").start()
 end, { desc = "Open Alpha Dashboard" })
 
+-- Toggle undo history tree
+keymap.set("n", "<leader>u", "<cmd>UndotreeToggle<CR>", { desc = "Toggle UndoTree" })
+
 -- =========================================================
 -- 📋 CLIPBOARD & EDITING
 -- =========================================================

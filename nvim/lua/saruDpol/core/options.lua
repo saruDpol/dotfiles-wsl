@@ -30,3 +30,10 @@ opt.splitbelow = true -- split horizontal window to the bottom
 
 -- turn off swapfile
 opt.swapfile = false
+
+-- persistent undo across restarts
+opt.undofile = true
+local undo_dir = vim.fn.stdpath("state") .. "/undo"
+opt.undodir = undo_dir
+vim.fn.mkdir(undo_dir, "p")
+opt.undolevels = 10000

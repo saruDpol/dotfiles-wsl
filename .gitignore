@@ -1,25 +1,24 @@
-.codex
-.DS_Store
-.idea/
-.vscode/
-*.log
-*.swp
-*.swo
-*~
+# Restrictive mode: ignore everything by default
+*
 
-__pycache__/
-.mypy_cache/
-.pytest_cache/
-.ruff_cache/
-.venv/
+# Keep this file tracked
+!.gitignore
+!README.md
 
-nvim/.codex
-nvim/.nvimlog
+# Allowed tracked paths
+!dotfiles/
+!dotfiles/**
 
-gh/hosts.yml
-gh/
-git/
-tmux/plugins/
+!tmux/
+!tmux/**
 
-matplotlib/
-codex/
+!nvim/
+!nvim/**
+
+!eza/
+!eza/**
+
+!images/
+!images/**
+
+!starship.toml
