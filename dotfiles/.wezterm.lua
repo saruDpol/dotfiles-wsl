@@ -1,6 +1,6 @@
 local wezterm = require("wezterm")
 local config_dir = os.getenv("XDG_CONFIG_HOME") or (wezterm.home_dir .. "/.config")
-local mode_file = config_dir .. "/theme-mode"
+local mode_file = os.getenv("THEME_MODE_FILE") or (config_dir .. "/theme-mode")
 
 local solarized_osaka = {
 	foreground = "#d0d0d0",
@@ -13,10 +13,58 @@ local solarized_osaka = {
 }
 
 local solarized_light = {
-	foreground = "#586e75",
-	background = "#fdf6e3",
-	selection_bg = "#eee8d5",
-	selection_fg = "#586e75",
+	foreground = "#223847",
+	background = "#f3ead8",
+	cursor_bg = "#2f6fa5",
+	cursor_fg = "#f3ead8",
+	cursor_border = "#2f6fa5",
+	selection_bg = "#d8cbb5",
+	selection_fg = "#24313b",
+	scrollbar_thumb = "#c8baa2",
+	split = "#c8baa2",
+	ansi = {
+		"#e4d8c4",
+		"#aa3f2b",
+		"#6a8b52",
+		"#9b7440",
+		"#2f6fa5",
+		"#9b4f70",
+		"#3f7e77",
+		"#223847",
+	},
+	brights = {
+		"#e7dcc8",
+		"#c25434",
+		"#7f9b67",
+		"#b08852",
+		"#4a81b3",
+		"#b06483",
+		"#4d9089",
+		"#1e2a33",
+	},
+	tab_bar = {
+		background = "#ded1bd",
+		active_tab = {
+			bg_color = "#f3ead8",
+			fg_color = "#24313b",
+		},
+		inactive_tab = {
+			bg_color = "#d5c7b1",
+			fg_color = "#6f7b84",
+		},
+		inactive_tab_hover = {
+			bg_color = "#e2d5c1",
+			fg_color = "#33414c",
+		},
+		new_tab = {
+			bg_color = "#ded1bd",
+			fg_color = "#6f7b84",
+		},
+		new_tab_hover = {
+			bg_color = "#e2d5c1",
+			fg_color = "#24313b",
+		},
+	},
 }
 
 local function get_mode()
@@ -34,6 +82,10 @@ end
 
 local mode = get_mode()
 local selected_scheme = (mode == "light") and "Solarized Light Custom" or "Solarized Osaka"
+
+if wezterm.add_to_config_reload_watch_list then
+	wezterm.add_to_config_reload_watch_list(mode_file)
+end
 
 return {
 	-- Defaulting to wsl home directory

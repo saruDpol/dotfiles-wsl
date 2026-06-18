@@ -21,4 +21,12 @@
 !images/
 !images/**
 
+!bin/
+!bin/**
+
 !starship.toml
+!starship-dark.toml
+!starship-light.toml
+
+theme-backups/
+tmux/theme-current.conf

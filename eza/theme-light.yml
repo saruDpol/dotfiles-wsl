@@ -1,0 +1,99 @@
+colourful: true
+
+filekinds:
+  normal: { foreground: "#223847", is_bold: false, is_underline: false, is_italic: false }
+  directory: { foreground: "#6a8b52", is_bold: true, is_underline: false, is_italic: false }
+  symlink: { foreground: "#2f6fa5", is_bold: false, is_underline: true, is_italic: false }
+  pipe: { foreground: "#33414c", is_bold: true, is_underline: false, is_italic: true }
+  block_device: { foreground: "#aa3f2b", is_bold: false, is_underline: false, is_italic: false }
+  char_device: { foreground: "#aa3f2b", is_bold: false, is_underline: false, is_italic: false }
+  socket: { foreground: "#3f7e77", is_bold: false, is_underline: false, is_italic: false }
+  special: { foreground: "#9b7440", is_bold: false, is_underline: false, is_italic: false }
+  executable: { foreground: "#aa3f2b", is_bold: true, is_underline: false, is_italic: false }
+  mount_point: { foreground: "#2f6fa5", is_bold: false, is_underline: false, is_italic: false }
+
+file_type:
+  python: { foreground: "#2f6fa5", is_bold: false, is_underline: false, is_italic: true }
+  source: { foreground: "#2f6fa5", is_bold: false, is_underline: false, is_italic: true }
+  image: { foreground: "#aa3f2b", is_bold: false, is_underline: false, is_italic: false }
+  video: { foreground: "#3f7e77", is_bold: false, is_underline: false, is_italic: false }
+  music: { foreground: "#3f7e77", is_bold: false, is_underline: false, is_italic: false }
+  document: { foreground: "#55646f", is_bold: false, is_underline: false, is_italic: false }
+  compressed: { foreground: "#9b7440", is_bold: false, is_underline: false, is_italic: false }
+  temp: { foreground: "#7e261f", is_bold: false, is_underline: false, is_italic: false }
+  compiled: { foreground: "#6a8b52", is_bold: false, is_underline: false, is_italic: false }
+  build: { foreground: "#9b7440", is_bold: false, is_underline: false, is_italic: false }
+
+perms:
+  user_read: { foreground: "#6a8b52", is_bold: false, is_underline: false }
+  user_write: { foreground: "#aa3f2b", is_bold: false, is_underline: false }
+  user_execute_file: { foreground: "#aa3f2b", is_bold: true, is_underline: false }
+  user_execute_other: { foreground: "#aa3f2b", is_bold: true, is_underline: false }
+  group_read: { foreground: "#6a8b52", is_bold: false, is_underline: false }
+  group_write: { foreground: "#aa3f2b", is_bold: false, is_underline: false }
+  group_execute: { foreground: "#aa3f2b", is_bold: true, is_underline: false }
+  other_read: { foreground: "#6a8b52", is_bold: false, is_underline: false }
+  other_write: { foreground: "#aa3f2b", is_bold: false, is_underline: false }
+  other_execute: { foreground: "#aa3f2b", is_bold: true, is_underline: false }
+  attribute: { foreground: "#55646f", is_bold: false, is_underline: false }
+
+size:
+  major: { foreground: "#6a8b52", is_bold: false, is_underline: false }
+  minor: { foreground: "#6a8b52", is_bold: false, is_underline: false }
+  number_byte: { foreground: "#6a8b52", is_bold: false, is_underline: false }
+  number_kilo: { foreground: "#6a8b52", is_bold: false, is_underline: false }
+  number_mega: { foreground: "#6a8b52", is_bold: false, is_underline: false }
+  number_giga: { foreground: "#6a8b52", is_bold: false, is_underline: false }
+  number_huge: { foreground: "#6a8b52", is_bold: false, is_underline: false }
+  unit_byte: { foreground: "#6a8b52", is_bold: false, is_underline: false }
+  unit_kilo: { foreground: "#6a8b52", is_bold: false, is_underline: false }
+  unit_mega: { foreground: "#6a8b52", is_bold: false, is_underline: false }
+  unit_giga: { foreground: "#6a8b52", is_bold: false, is_underline: false }
+  unit_huge: { foreground: "#6a8b52", is_bold: false, is_underline: false }
+
+users:
+  user_you: { foreground: "#223847", is_bold: false, is_underline: false }
+  user_root: { foreground: "#aa3f2b", is_bold: false, is_underline: false }
+  user_other: { foreground: "#2f6fa5", is_bold: false, is_underline: false }
+  group_yours: { foreground: "#223847", is_bold: false, is_underline: false }
+  group_other: { foreground: "#2f6fa5", is_bold: false, is_underline: false }
+  group_root: { foreground: "#aa3f2b", is_bold: false, is_underline: false }
+
+links:
+  normal: { foreground: "#2f6fa5", is_bold: false, is_underline: true }
+  multi_link_file: { foreground: "#2f6fa5", is_bold: false, is_underline: true }
+
+git:
+  new: { foreground: "#6a8b52", is_bold: true, is_underline: false }
+  modified: { foreground: "#9b7440", is_bold: true, is_underline: false }
+  deleted: { foreground: "#aa3f2b", is_bold: true, is_underline: false }
+  renamed: { foreground: "#2f6fa5", is_bold: false, is_underline: false }
+  typechange: { foreground: "#2f6fa5", is_bold: false, is_underline: false }
+  ignored: { foreground: "#55646f", is_bold: false, is_underline: false }
+  conflicted: { foreground: "#7e261f", is_bold: true, is_underline: false }
+
+git_repo:
+  branch_main: { foreground: "#aa3f2b", is_bold: false, is_underline: false }
+  branch_other: { foreground: "#2f6fa5", is_bold: false, is_underline: false }
+  git_clean: { foreground: "#6a8b52", is_bold: false, is_underline: false }
+  git_dirty: { foreground: "#9b7440", is_bold: false, is_underline: false }
+
+security_context:
+  colon: { foreground: "#55646f", is_bold: false, is_underline: false }
+  user: { foreground: "#2f6fa5", is_bold: false, is_underline: false }
+  role: { foreground: "#33414c", is_bold: false, is_underline: false }
+  typ: { foreground: "#33414c", is_bold: false, is_underline: false }
+  range: { foreground: "#33414c", is_bold: false, is_underline: false }
+
+punctuation: { foreground: "#55646f", is_bold: false, is_underline: false }
+date: { foreground: "#aa3f2b", is_bold: false, is_underline: false }
+inode: { foreground: "#55646f", is_bold: false, is_underline: false }
+blocks: { foreground: "#55646f", is_bold: false, is_underline: false }
+header: { foreground: "#223847", is_bold: true, is_underline: false }
+octal: { foreground: "#55646f", is_bold: false, is_underline: false }
+flags: { foreground: "#55646f", is_bold: false, is_underline: false }
+
+symlink_path: { foreground: "#2f6fa5", is_bold: false, is_underline: true }
+control_char: { foreground: "#55646f", is_bold: false, is_underline: false }
+broken_symlink: { foreground: "#aa3f2b", is_bold: false, is_underline: false }
+broken_path_overlay: { foreground: "#33414c", is_bold: false, is_underline: false }

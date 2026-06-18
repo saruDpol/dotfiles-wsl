@@ -4,6 +4,10 @@
 
 ![nvim](./images/nvim.png)
 
+### Japanese theme switch
+
+![theme](./images/theme.png)
+
 Config for:
 
 - NVIM v0.12.0-dev
