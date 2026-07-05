@@ -17,14 +17,56 @@ Config for:
 
 ## Replication Notes
 
+### Install tracked config
+
+This repo is meant to be the `~/.config` directory itself. On a new machine,
+move any existing config out of the way first if needed, then clone it there and
+run the installer:
+
+```sh
+git clone <repo-url> ~/.config
+cd ~/.config
+./install.sh
+```
+
+Because the repo already lives at `~/.config`, `nvim`, `tmux`, `eza`, `bin`,
+and `starship*.toml` are already in their final location. A `git pull` updates
+them directly.
+
+The installer bootstraps the WSL dependencies used by this config:
+
+- Ubuntu packages: `zsh`, `tmux`, `neovim`, `ripgrep`, `fd-find`, `python3`,
+  `python3-venv`, `zoxide`, build tools, Git, curl, unzip
+- Neovim from `ppa:neovim-ppa/unstable`
+- Oh My Zsh and the pinned zsh plugins used by `.zshrc`
+- `starship`, `eza`, `nvm`, Node.js, `tree-sitter-cli`, and tmux TPM
+
+Then it handles files that must live outside the repo:
+
+- `dotfiles/.zshrc` -> `~/.zshrc`
+
+On WSL2, WezTerm runs on Windows, so the installer writes a small loader to:
+
+- `/mnt/c/Users/ptorn/.wezterm.lua`
+
+That loader points at `dotfiles/.wezterm.lua` inside WSL, so changes from
+`git pull` are picked up by WezTerm without copying the full config again.
+
+If a destination already exists and is not already the right symlink or managed
+loader, it is moved to `~/.dotfiles-backup/<timestamp>/` before the new file is
+installed.
+
+Useful checks:
+
+```sh
+./install.sh --dry-run
+./install.sh --no-deps
+./install.sh --nvim-sync
+```
+
 ### WSL system dependencies
 
-- `sudo apt update`
-- `sudo apt install -y git curl build-essential unzip neovim ripgrep fd-find tmux lazygit eza zoxide zsh nodejs npm python3 python3-venv tree-sitter-cli`
-- `sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"`
-- `git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions`
-- `git clone https://github.com/zsh-users/zsh-syntax-highlighting ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting`
-- `curl -fsSL https://starship.rs/install.sh | sh`
+These are automated by `./install.sh`.
 
 Notes:
 

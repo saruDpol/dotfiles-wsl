@@ -4,6 +4,7 @@
 # Keep this file tracked
 !.gitignore
 !README.md
+!install.sh
 
 # Allowed tracked paths
 !dotfiles/
@@ -30,3 +31,10 @@
 
 theme-backups/
 tmux/theme-current.conf
+
+# Local machine state/dependencies kept out of the dotfiles repo.
+theme-mode
+tmux/plugins/
+gh/
+git/
+wslu/

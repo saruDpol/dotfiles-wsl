@@ -92,7 +92,7 @@ return {
 	default_prog = { "wsl.exe", "-d", "Ubuntu", "--cd", "~", "--", "zsh", "-il" },
 	automatically_reload_config = true,
 	-- font settings
-	font = wezterm.font("BlexMono Nerd Font"),
+	font = wezterm.font("Fira Code"),
 	font_size = 14.0,
 
 	--	colorscheme
@@ -101,7 +101,7 @@ return {
 		["Solarized Light Custom"] = solarized_light,
 	},
 	color_scheme = selected_scheme,
-	window_background_opacity = 0.65,
+	window_background_opacity = 0.85,
 
 	--Performance tweaks
 	enable_wayland = false,
