@@ -291,6 +291,20 @@ windows_home_dir() {
     return 0
   fi
 
+  if have cmd.exe && have wslpath; then
+    local win_profile
+    local wsl_profile
+
+    win_profile="$(cmd.exe /C "echo %USERPROFILE%" 2>/dev/null | tr -d '\r')"
+    if [[ -n "$win_profile" ]]; then
+      wsl_profile="$(wslpath "$win_profile" 2>/dev/null || true)"
+      if [[ -d "$wsl_profile" ]]; then
+        printf '%s\n' "$wsl_profile"
+        return 0
+      fi
+    fi
+  fi
+
   if [[ -d /mnt/c/Users/ptorn ]]; then
     printf '%s\n' /mnt/c/Users/ptorn
     return 0
@@ -327,6 +341,35 @@ install_zshrc() {
 
   log "Linking $target -> $source"
   run ln -s "$source" "$target"
+}
+
+sync_eza_theme() {
+  local mode_file="$repo_dir/theme-mode"
+  local mode="dark"
+  local source
+  local target="$repo_dir/eza/theme.yml"
+
+  if [[ -f "$mode_file" ]]; then
+    local current
+    current="$(head -n 1 "$mode_file" 2>/dev/null || true)"
+    if [[ "$current" == "light" ]]; then
+      mode="light"
+    fi
+  fi
+
+  source="$repo_dir/eza/theme-${mode}.yml"
+  if [[ ! -f "$source" ]]; then
+    log "Skipping eza theme sync: missing $source"
+    return 0
+  fi
+
+  log "Syncing eza theme: $source -> $target"
+  if [[ "$dry_run" -eq 1 ]]; then
+    log "[dry-run] copy $source to $target"
+    return 0
+  fi
+
+  cp "$source" "$target"
 }
 
 install_wezterm_windows_loader() {
@@ -377,6 +420,7 @@ EOF
 install_dotfile_links() {
   section "Dotfile links"
   install_zshrc
+  sync_eza_theme
   install_wezterm_windows_loader
 }
 

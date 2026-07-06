@@ -33,6 +33,10 @@ Because the repo already lives at `~/.config`, `nvim`, `tmux`, `eza`, `bin`,
 and `starship*.toml` are already in their final location. A `git pull` updates
 them directly.
 
+`eza/theme.yml` is treated as generated runtime state. The tracked theme sources
+are `eza/theme-dark.yml` and `eza/theme-light.yml`; the installer and
+`bin/theme-mode` sync the active one into `eza/theme.yml`.
+
 The installer bootstraps the WSL dependencies used by this config:
 
 - Ubuntu packages: `zsh`, `tmux`, `neovim`, `ripgrep`, `fd-find`, `python3`,
@@ -47,7 +51,7 @@ Then it handles files that must live outside the repo:
 
 On WSL2, WezTerm runs on Windows, so the installer writes a small loader to:
 
-- `/mnt/c/Users/ptorn/.wezterm.lua`
+- `/mnt/c/Users/<your-user>/.wezterm.lua`
 
 That loader points at `dotfiles/.wezterm.lua` inside WSL, so changes from
 `git pull` are picked up by WezTerm without copying the full config again.

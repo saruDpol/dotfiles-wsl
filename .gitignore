@@ -31,6 +31,7 @@
 
 theme-backups/
 tmux/theme-current.conf
+eza/theme.yml
 
 # Local machine state/dependencies kept out of the dotfiles repo.
 theme-mode

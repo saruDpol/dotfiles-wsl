@@ -6,7 +6,7 @@ export TERM="xterm-256color"
 # ───────────────────────────────
 export PATH="$HOME/.local/bin:$PATH"
 
-WINDOWS_THEME_DIR="/mnt/c/Users/ptorn/.config"
+WINDOWS_THEME_DIR="/mnt/c/Users/saruBpol/.config"
 LOCAL_THEME_MODE_FILE="${XDG_CONFIG_HOME:-$HOME/.config}/theme-mode"
 THEME_MODE_FILE="$LOCAL_THEME_MODE_FILE"
 export THEME_MODE_FILE
@@ -99,12 +99,98 @@ apply_shell_theme
 alias ..="cd .."
 alias ...="cd ../.."
 alias projects="cd ~/projects"
-alias windows="cd ~/../../mnt/c/Users/ptorn/"
+alias windows="cd ~/../../mnt/c/Users/saruBpol/"
 alias ebash="nvim ~/.zshrc"
 alias ubash="source ~/.zshrc"
 alias root="cd ~"
 alias cl="clear && ll"
-alias biosfer="cd ~/../../mnt/c/Users/ptorn/POL/Biosfer/"
+alias main="cd ~/../../mnt/c/Users/saruBpol/biosfer-main/"
+
+# Programs
+alias liposcale='/mnt/c/Users/saruBpol/biosfer-main/software/operacio/.venv/Scripts/python.exe \
+C:/Users/saruBpol/biosfer-main/software/operacio/Liposcale/2DNMR/main.py'
+
+alias olip='cd /mnt/c/Users/saruBpol/biosfer-main/software/operacio/Liposcale/2DNMR/Output/'
+
+alias glicoscale='/mnt/c/Users/saruBpol/biosfer-main/software/operacio/.venv/Scripts/python.exe \
+C:/Users/saruBpol/biosfer-main/software/operacio/Glycoscale/2DNMR/main.py'
+
+alias oglic='cd /mnt/c/Users/saruBpol/biosfer-main/software/operacio/Glycoscale/2DNMR/Output/'
+
+alias lmwm='/mnt/c/Users/saruBpol/biosfer-main/software/lmwm_models/.venv/Scripts/python.exe \
+C:/Users/saruBpol/biosfer-main/software/lmwm_models/lmwm_models_exe.py'
+
+alias olmwm='cd /mnt/c/Users/saruBpol/biosfer-main/software/lmwm_models/Output/'
+
+alias lippol='/mnt/c/Users/saruBpol/biosfer-main/software/Lippol/Lippol_v1/.venv/Scripts/python.exe \
+C:/Users/saruBpol/biosfer-main/software/Lippol/Lippol_v1/main_lippol.py'
+
+alias olipp='cd /mnt/c/Users/saruBpol/biosfer-main/software/Lippol/Lippol_v1/Output/'
+
+alias kangaroo='/mnt/c/Users/saruBpol/biosfer-main/software/Kangaroo/Kangaroo_v1_git/Kangaroo_v1/.venv/Scripts/python.exe \
+C:/Users/saruBpol/biosfer-main/software/Kangaroo/Kangaroo_v1_git/Kangaroo_v1/kangaroo.py'
+
+alias mussol='/mnt/c/Users/saruBpol/biosfer-main/software/Mussol/.venv/Scripts/python.exe \
+C:/Users/saruBpol/biosfer-main/software/Mussol/main.py'
+
+alias pdf='/mnt/c/Users/saruBpol/biosfer-main/software/convert-to-pdf/.venv/Scripts/python.exe \
+C:/Users/saruBpol/biosfer-main/software/convert-to-pdf/word_to_pdf.py'
+
+alias seguimiento='explorer.exe "C:\Users\saruBpol\OneDrive\SharedFiles\Biosfer\RC-2101 - SEGUIMIENTO SOFTWARE.xlsm"'
+# ───────────────────────────────
+# Git helper
+# ───────────────────────────────
+git() {
+  if [[ "$1" == "rm" ]]; then
+    shift
+    command git rm --cached "$@"
+  else
+    command git "$@"
+  fi
+}
+
+# ───────────────────────────────
+# Zoxide
+# ───────────────────────────────
+eval "$(zoxide init zsh)"
+alias cd="z"
+
+# ───────────────────────────────
+# Android Studio
+# ───────────────────────────────
+export ANDROID_HOME=/mnt/c/Users/saruBpol/AppData/Local/Android/Sdk
+
+alias adb="/mnt/c/Users/saruBpol/AppData/Local/Android/Sdk/platform-tools/adb.exe"
+alias emulator="/mnt/c/Users/saruBpol/AppData/Local/Android/Sdk/emulator/emulator.exe"
+
+# ───────────────────────────────
+# nvm (Node Version Manager)
+# ───────────────────────────────
+if [ -n "$ZSH_VERSION" ]; then
+  if ! command -v hash >/dev/null 2>&1; then
+    hash() { true; }
+  fi
+fi
+
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
+
+export PATH="$HOME/.cargo/bin:$PATH"
+
+dark() {
+  "$HOME/.config/bin/theme-mode" dark >/dev/null && apply_shell_theme dark
+}
+
+light() {
+  "$HOME/.config/bin/theme-mode" light >/dev/null && apply_shell_theme light
+}
+
+toggle_theme() {
+  local mode
+  mode="$("$HOME/.config/bin/theme-mode" toggle)"
+  apply_shell_theme "$mode"
+}
 
 # Eza aliases
 eza_base() {
@@ -140,61 +226,6 @@ lt() {
 unalias open 2>/dev/null
 open() {
   explorer.exe "$@"
-}
-
-# ───────────────────────────────
-# Git helper
-# ───────────────────────────────
-git() {
-  if [[ "$1" == "rm" ]]; then
-    shift
-    command git rm --cached "$@"
-  else
-    command git "$@"
-  fi
-}
-
-# ───────────────────────────────
-# Zoxide
-# ───────────────────────────────
-eval "$(zoxide init zsh)"
-alias cd="z"
-
-# ───────────────────────────────
-# Android Studio
-# ───────────────────────────────
-export ANDROID_HOME=/mnt/c/Users/ptorn/AppData/Local/Android/Sdk
-
-alias adb="/mnt/c/Users/ptorn/AppData/Local/Android/Sdk/platform-tools/adb.exe"
-alias emulator="/mnt/c/Users/ptorn/AppData/Local/Android/Sdk/emulator/emulator.exe"
-
-# ───────────────────────────────
-# nvm (Node Version Manager)
-# ───────────────────────────────
-if [ -n "$ZSH_VERSION" ]; then
-  if ! command -v hash >/dev/null 2>&1; then
-    hash() { true; }
-  fi
-fi
-
-export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
-
-export PATH="$HOME/.cargo/bin:$PATH"
-
-dark() {
-  "$HOME/.config/bin/theme-mode" dark >/dev/null && apply_shell_theme dark
-}
-
-light() {
-  "$HOME/.config/bin/theme-mode" light >/dev/null && apply_shell_theme light
-}
-
-toggle_theme() {
-  local mode
-  mode="$("$HOME/.config/bin/theme-mode" toggle)"
-  apply_shell_theme "$mode"
 }
 
 # TMUX IDE

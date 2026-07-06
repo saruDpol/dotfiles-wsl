@@ -3,14 +3,48 @@
 set -euo pipefail
 
 config_home="${XDG_CONFIG_HOME:-$HOME/.config}"
-windows_theme_dir="/mnt/c/Users/ptorn/.config"
 local_mode_file="$config_home/theme-mode"
-windows_mode_file="$windows_theme_dir/theme-mode"
 mode_file="$local_mode_file"
 
 tmux_theme_dir="$config_home/tmux"
 eza_theme_dir="$config_home/eza"
 eza_theme_current="$eza_theme_dir/theme.yml"
+
+detect_windows_theme_dir() {
+  if [[ -n "${WINDOWS_HOME:-}" && -d "$WINDOWS_HOME" ]]; then
+    printf '%s\n' "$WINDOWS_HOME/.config"
+    return 0
+  fi
+
+  if command -v cmd.exe >/dev/null 2>&1 && command -v wslpath >/dev/null 2>&1; then
+    local win_profile
+    local wsl_profile
+
+    win_profile="$(cmd.exe /C "echo %USERPROFILE%" 2>/dev/null | tr -d '\r')"
+    if [[ -n "$win_profile" ]]; then
+      wsl_profile="$(wslpath "$win_profile" 2>/dev/null || true)"
+      if [[ -n "$wsl_profile" && -d "$wsl_profile" ]]; then
+        printf '%s\n' "$wsl_profile/.config"
+        return 0
+      fi
+    fi
+  fi
+
+  if [[ -d /mnt/c/Users/saruBpol ]]; then
+    printf '%s\n' "/mnt/c/Users/saruBpol/.config"
+    return 0
+  fi
+
+  if [[ -d /mnt/c/Users/ptorn ]]; then
+    printf '%s\n' "/mnt/c/Users/ptorn/.config"
+    return 0
+  fi
+
+  return 1
+}
+
+windows_theme_dir="$(detect_windows_theme_dir || true)"
+windows_mode_file="${windows_theme_dir:+$windows_theme_dir/theme-mode}"
 
 ensure_mode_file() {
   if [[ ! -f "$mode_file" ]]; then

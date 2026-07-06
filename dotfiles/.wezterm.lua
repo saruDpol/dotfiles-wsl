@@ -81,7 +81,7 @@ local function get_mode()
 end
 
 local mode = get_mode()
-local selected_scheme = (mode == "light") and "Solarized Light Custom" or "Solarized Osaka"
+local active_colors = (mode == "light") and solarized_light or solarized_osaka
 
 if wezterm.add_to_config_reload_watch_list then
 	wezterm.add_to_config_reload_watch_list(mode_file)
@@ -96,11 +96,7 @@ return {
 	font_size = 14.0,
 
 	--	colorscheme
-	color_schemes = {
-		["Solarized Osaka"] = solarized_osaka,
-		["Solarized Light Custom"] = solarized_light,
-	},
-	color_scheme = selected_scheme,
+	colors = active_colors,
 	window_background_opacity = 0.85,
 
 	--Performance tweaks
