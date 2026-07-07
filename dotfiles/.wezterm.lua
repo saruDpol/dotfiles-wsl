@@ -14,7 +14,7 @@ local solarized_osaka = {
 
 local solarized_light = {
 	foreground = "#223847",
-	background = "#f3ead8",
+	background = "#eddcbb",
 	cursor_bg = "#2f6fa5",
 	cursor_fg = "#f3ead8",
 	cursor_border = "#2f6fa5",
