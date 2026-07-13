@@ -37,7 +37,7 @@ local function build_theme(mode)
 	if mode == "light" then
 		return {
 			normal = {
-				a = { fg = colors.light.navy, bg = colors.light.gold, gui = "bold" },
+				a = { fg = colors.light.red, bg = colors.light.paper, gui = "bold" },
 				b = { fg = colors.light.paper, bg = colors.light.red },
 				c = { fg = colors.light.paper, bg = colors.light.green_dark },
 				z = { fg = colors.light.navy, bg = colors.light.gold, gui = "bold" },
@@ -47,8 +47,8 @@ local function build_theme(mode)
 				z = { fg = colors.light.paper, bg = colors.light.red, gui = "bold" },
 			},
 			visual = {
-				a = { fg = colors.light.paper, bg = colors.light.blue, gui = "bold" },
-				z = { fg = colors.light.paper, bg = colors.light.blue, gui = "bold" },
+				a = { fg = colors.light.paper, bg = colors.light.green, gui = "bold" },
+				z = { fg = colors.light.paper, bg = colors.light.green, gui = "bold" },
 			},
 			replace = {
 				a = { fg = colors.light.paper, bg = colors.light.green, gui = "bold" },
@@ -68,7 +68,7 @@ local function build_theme(mode)
 
 	return {
 		normal = {
-			a = { fg = colors.dark.darkblue, bg = colors.dark.gold, gui = "bold" },
+			a = { fg = colors.light.red, bg = colors.light.paper, gui = "bold" },
 			b = { fg = colors.dark.white, bg = colors.dark.branch },
 			c = { fg = colors.dark.white, bg = colors.dark.blue },
 			z = { fg = colors.dark.darkblue, bg = colors.dark.gold, gui = "bold" },
@@ -96,7 +96,18 @@ local function build_sections(mode)
 	if mode == "light" then
 		return {
 			lualine_a = {
-				{ "mode", separator = { left = "" }, right_padding = 2 },
+				{
+					"mode",
+					separator = { left = "" },
+					right_padding = 2,
+					fmt = function(str)
+						if str == "NORMAL" then
+							return "⬤ "
+						end
+
+						return str
+					end,
+				},
 			},
 			lualine_b = {
 				{
@@ -114,7 +125,7 @@ local function build_sections(mode)
 					"diagnostics",
 					symbols = { error = " ", warn = " ", info = " " },
 					separator = { right = "" },
-					color = { fg = colors.light.navy, bg = colors.light.gold_soft },
+					color = { fg = colors.light.navy, bg = colors.light.paper },
 					diagnostics_color = {
 						error = { fg = colors.light.red_dark },
 						warn = { fg = colors.light.gold },
@@ -135,24 +146,44 @@ local function build_sections(mode)
 			lualine_x = {
 				{ "encoding", color = { fg = colors.light.paper, bg = colors.light.green } },
 				{ "fileformat", color = { fg = colors.light.paper, bg = colors.light.green } },
-				{ "filetype", separator = { right = "" }, color = { fg = colors.light.paper, bg = colors.light.green_light } },
+				{
+					"filetype",
+					separator = { right = "" },
+					color = { fg = colors.light.paper, bg = colors.light.green_light },
+				},
 			},
 			lualine_y = {
 				{
 					"progress",
 					separator = { right = "▓▒░" },
-					color = { fg = colors.light.navy, bg = colors.light.gold },
+					color = { fg = colors.light.soft, bg = colors.light.paper },
 				},
 			},
 			lualine_z = {
-				{ "location", separator = { right = "" }, left_padding = 2, color = { fg = colors.light.paper, bg = colors.light.blue } },
+				{
+					"location",
+					separator = { right = "" },
+					left_padding = 2,
+					color = { fg = colors.light.paper, bg = colors.light.blue },
+				},
 			},
 		}
 	end
 
 	return {
 		lualine_a = {
-			{ "mode", separator = { left = "" }, right_padding = 2 },
+			{
+				"mode",
+				separator = { left = "" },
+				right_padding = 2,
+				fmt = function(str)
+					if str == "NORMAL" then
+						return "⬤ "
+					end
+
+					return str
+				end,
+			},
 		},
 		lualine_b = {
 			{
