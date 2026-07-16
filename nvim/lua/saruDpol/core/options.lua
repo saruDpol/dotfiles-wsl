@@ -37,3 +37,15 @@ local undo_dir = vim.fn.stdpath("state") .. "/undo"
 opt.undodir = undo_dir
 vim.fn.mkdir(undo_dir, "p")
 opt.undolevels = 10000
+
+local function fix_markdown_highlights()
+	vim.api.nvim_set_hl(0, "markdownError", {
+		link = "Normal",
+	})
+end
+
+fix_markdown_highlights()
+
+vim.api.nvim_create_autocmd("ColorScheme", {
+	callback = fix_markdown_highlights,
+})
