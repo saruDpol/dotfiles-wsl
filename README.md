@@ -1,8 +1,6 @@
 # 🏯🎋🎍🌸 saruDpol's dotfiles 🐒🥋🦧🦍
 
-![terminal](./images/terminal.png)
-
-![nvim](./images/nvim.png)
+---
 
 ### Japanese theme switch
 
@@ -14,6 +12,8 @@ Config for:
 - Build type: RelWithDebInfo
 - LuaJIT 2.1.1703358377
 - Run "nvim -V1 -v" for more info
+
+![nvim](./images/nvim.png)
 
 ## Replication Notes
 
