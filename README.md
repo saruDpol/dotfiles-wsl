@@ -1,7 +1,5 @@
 # 🏯🎋🎍🌸 saruDpol's dotfiles 🐒🥋🦧🦍
 
----
-
 ### Japanese theme switch
 
 ![theme](./images/theme.png)
