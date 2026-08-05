@@ -9,6 +9,7 @@ node_version="24.14.1"
 tree_sitter_cli_version="0.26.8"
 starship_version="1.24.2"
 eza_version="0.23.4"
+lazygit_version="0.64.0"
 
 dry_run=0
 install_deps=1
@@ -33,6 +34,7 @@ Pinned tool versions:
   tree-sitter-cli        ${tree_sitter_cli_version}
   starship               ${starship_version}
   eza                    ${eza_version}
+  lazygit                ${lazygit_version}
 
 WSL2 and WezTerm itself are not installed here. This only writes the Windows
 WezTerm loader that points to dotfiles/.wezterm.lua.
@@ -269,19 +271,62 @@ install_tmux_tpm() {
   fi
 }
 
-install_optional_lazygit() {
+install_lazygit() {
   section "lazygit"
 
   if have lazygit; then
-    log "Already installed: $(command -v lazygit)"
-    return 0
+    local installed_version
+    installed_version="$(
+      lazygit --version 2>/dev/null |
+        sed -n 's/.*version=\([^, ]*\).*/\1/p'
+    )"
+
+    if [[ "$installed_version" == "$lazygit_version" ]]; then
+      log "Already installed: lazygit $lazygit_version"
+      return 0
+    fi
+
+    log "Updating lazygit: ${installed_version:-unknown} -> $lazygit_version"
   fi
 
-  if apt-cache show lazygit >/dev/null 2>&1; then
-    sudo_apt_install lazygit
+  local machine
+  local arch
+  local tmp
+  local archive
+  local url
+
+  machine="$(uname -m)"
+
+  case "$machine" in
+    x86_64|amd64)
+      arch="x86_64"
+      ;;
+    aarch64|arm64)
+      arch="arm64"
+      ;;
+    *)
+      log "Unsupported architecture for lazygit: $machine"
+      return 1
+      ;;
+  esac
+
+  if [[ "$dry_run" -eq 1 ]]; then
+    tmp="/tmp/lazygit-${lazygit_version}"
   else
-    log "lazygit is not available from current APT sources; skipping."
-    log "Your tmux popup binding will work after lazygit is installed manually."
+    tmp="$(mktemp -d)"
+  fi
+
+  archive="$tmp/lazygit.tar.gz"
+  url="https://github.com/jesseduffield/lazygit/releases/download/v${lazygit_version}/lazygit_${lazygit_version}_Linux_${arch}.tar.gz"
+
+  run mkdir -p "$tmp"
+  run curl -fsSL -o "$archive" "$url"
+  run tar -xzf "$archive" -C "$tmp" lazygit
+  run sudo install -m 0755 "$tmp/lazygit" /usr/local/bin/lazygit
+  run rm -rf "$tmp"
+
+  if [[ "$dry_run" -eq 0 ]]; then
+    lazygit --version
   fi
 }
 
@@ -323,7 +368,7 @@ install_dependencies() {
   install_eza
   install_nvm_node
   install_tmux_tpm
-  install_optional_lazygit
+  install_lazygit
 }
 
 install_zshrc() {

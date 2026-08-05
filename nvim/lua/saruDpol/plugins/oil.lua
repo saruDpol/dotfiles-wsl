@@ -3,7 +3,7 @@ return {
 	opts = {
 		-- Oil config options here:
 		columns = {
-			-- "icon",
+			"icon",
 			-- "mtime",
 		},
 		use_default_keymaps = true,
