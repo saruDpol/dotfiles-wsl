@@ -1,0 +1,11 @@
+# yaml-language-server: $schema=https://json.schemastore.org/lazygit.json
+
+keybinding:
+  universal:
+    # Alt+h / Alt+l: canviar entre els panells de Lazygit
+    prevBlock-alt: "<alt+k>"
+    nextBlock-alt: "<alt+j>"
+
+    # Alt+k / Alt+j: desplaar el diff o document principal
+    scrollUpMain-alt1: "<alt+h>"
+    scrollDownMain-alt1: "<alt+l>"

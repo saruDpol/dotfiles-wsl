@@ -16,6 +16,9 @@
 !nvim/
 !nvim/**
 
+!lazygit/
+!lazygit/**
+
 !eza/
 !eza/**
 
